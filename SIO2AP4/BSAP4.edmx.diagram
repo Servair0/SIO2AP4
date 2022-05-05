@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86231061fd5e43f0afdc89a780b49b89" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="mldAP4.badge" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="mldAP4.categ_soins" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="mldAP4.categorie_indisponibilite" Width="1.5" PointX="6" PointY="12.375" />
+        <EntityTypeShape EntityType="mldAP4.chambre_forte" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="mldAP4.convalescence" Width="1.5" PointX="10.5" PointY="12.5" />
+        <EntityTypeShape EntityType="mldAP4.indisponibilite" Width="1.5" PointX="8.25" PointY="8.875" />
+        <EntityTypeShape EntityType="mldAP4.infirmiere" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="mldAP4.infirmiere_badge" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="mldAP4.lieu_convalescence" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="mldAP4.patient" Width="1.5" PointX="8.25" PointY="12.625" />
+        <EntityTypeShape EntityType="mldAP4.personne" Width="1.5" PointX="0.75" PointY="12.625" />
+        <EntityTypeShape EntityType="mldAP4.personne_login" Width="1.5" PointX="3" PointY="17.125" />
+        <EntityTypeShape EntityType="mldAP4.soins" Width="1.5" PointX="7.5" PointY="4.75" />
+        <EntityTypeShape EntityType="mldAP4.soins_visite" Width="1.5" PointX="12.75" PointY="7" />
+        <EntityTypeShape EntityType="mldAP4.temoignage" Width="1.5" PointX="5.25" PointY="18.625" />
+        <EntityTypeShape EntityType="mldAP4.token" Width="1.5" PointX="5.25" PointY="15.875" />
+        <EntityTypeShape EntityType="mldAP4.type_soins" Width="1.5" PointX="5.25" PointY="6" />
+        <EntityTypeShape EntityType="mldAP4.visite" Width="1.5" PointX="10.5" PointY="8.625" />
+        <EntityTypeShape EntityType="mldAP4.administrateur" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_2" />
+        <AssociationConnector Association="mldAP4.type_soins_type_soins_ibfk_1" />
+        <AssociationConnector Association="mldAP4.indisponibilite_indisponibilite_ibfk_2" />
+        <AssociationConnector Association="mldAP4.convalescence_convalescence_ibfk_1" />
+        <AssociationConnector Association="mldAP4.convalescence_convalescence_ibfk_2" />
+        <AssociationConnector Association="mldAP4.indisponibilite_indisponibilite_ibfk_1" />
+        <AssociationConnector Association="mldAP4.infirmiere_infirmiere_ibfk_1" />
+        <AssociationConnector Association="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_1" />
+        <AssociationConnector Association="mldAP4.patient_patient_ibfk_3" />
+        <AssociationConnector Association="mldAP4.visite_visite_ibfk_2" />
+        <AssociationConnector Association="mldAP4.lieu_convalescence_lieu_convalescence_ibfk_1" />
+        <AssociationConnector Association="mldAP4.patient_patient_ibfk_1" />
+        <AssociationConnector Association="mldAP4.patient_patient_ibfk_2" />
+        <AssociationConnector Association="mldAP4.visite_visite_ibfk_1" />
+        <AssociationConnector Association="mldAP4.personne_login_personne_login_ibfk_1" />
+        <AssociationConnector Association="mldAP4.temoignage_temoignage_ibfk_1" />
+        <AssociationConnector Association="mldAP4.token_token_ibfk_1" />
+        <AssociationConnector Association="mldAP4.soins_FK_soins" />
+        <AssociationConnector Association="mldAP4.soins_visite_soins_visite_ibfk_2" />
+        <AssociationConnector Association="mldAP4.soins_visite_soins_visite_ibfk_1" />
+        <AssociationConnector Association="mldAP4.specialisation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

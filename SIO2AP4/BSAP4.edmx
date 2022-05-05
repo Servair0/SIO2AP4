@@ -1,0 +1,1455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="mldAP4.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'SIO2AP4_Dauvergne.dbo.administrateur' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="administrateur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="badge">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uid" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="actif" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categ_soins">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="libel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="categorie_indisponibilite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="libelle" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chambre_forte">
+          <Key>
+            <PropertyRef Name="badge" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="badge" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="acces_ok" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="convalescence">
+          <Key>
+            <PropertyRef Name="id_patient" />
+            <PropertyRef Name="id_lieux" />
+            <PropertyRef Name="date_deb" />
+          </Key>
+          <Property Name="id_patient" Type="int" Nullable="false" />
+          <Property Name="id_lieux" Type="int" Nullable="false" />
+          <Property Name="date_deb" Type="date" Nullable="false" />
+          <Property Name="date_fin" Type="date" />
+          <Property Name="chambre" Type="nvarchar" MaxLength="50" />
+          <Property Name="tel_directe" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="indisponibilite">
+          <Key>
+            <PropertyRef Name="infirmiere" />
+            <PropertyRef Name="date_debut" />
+          </Key>
+          <Property Name="infirmiere" Type="int" Nullable="false" />
+          <Property Name="date_debut" Type="date" Nullable="false" />
+          <Property Name="date_fin" Type="date" Nullable="false" />
+          <Property Name="heure_deb" Type="time" Precision="7" />
+          <Property Name="heure_fin" Type="time" Precision="7" />
+          <Property Name="categorie" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="infirmiere">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="fichier_photo" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="infirmiere_badge">
+          <Key>
+            <PropertyRef Name="id_infirmiere" />
+            <PropertyRef Name="id_badge" />
+            <PropertyRef Name="date_deb" />
+          </Key>
+          <Property Name="id_infirmiere" Type="int" Nullable="false" />
+          <Property Name="id_badge" Type="int" Nullable="false" />
+          <Property Name="date_deb" Type="date" Nullable="false" />
+          <Property Name="date_fin" Type="date" />
+        </EntityType>
+        <EntityType Name="lieu_convalescence">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="titre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ad1" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ad2" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="cp" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="ville" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="tel_fixe" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="contact" Type="int" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="informations_medicales" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="personne_de_confiance" Type="int" />
+          <Property Name="infirmiere_souhait" Type="int" />
+        </EntityType>
+        <EntityType Name="personne">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sexe" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="date_naiss" Type="date" />
+          <Property Name="date_deces" Type="date" />
+          <Property Name="ad1" Type="nvarchar" MaxLength="100" />
+          <Property Name="ad2" Type="nvarchar" MaxLength="100" />
+          <Property Name="cp" Type="int" />
+          <Property Name="ville" Type="nvarchar" MaxLength="100" />
+          <Property Name="tel_fixe" Type="nvarchar" MaxLength="15" />
+          <Property Name="tel_port" Type="nvarchar" MaxLength="15" />
+          <Property Name="mail" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="personne_login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="mp" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="derniere_connexion" Type="date" />
+          <Property Name="nb_tentative_erreur" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="soins">
+          <Key>
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id_categ_soins" Type="int" Nullable="false" />
+          <Property Name="id_type_soins" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="libel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="coefficient" Type="real" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="soins_visite">
+          <Key>
+            <PropertyRef Name="visite" />
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+            <PropertyRef Name="id_soins" />
+          </Key>
+          <Property Name="visite" Type="int" Nullable="false" />
+          <Property Name="id_categ_soins" Type="int" Nullable="false" />
+          <Property Name="id_type_soins" Type="int" Nullable="false" />
+          <Property Name="id_soins" Type="int" Nullable="false" />
+          <Property Name="prevu" Type="smallint" Nullable="false" />
+          <Property Name="realise" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="specialisation">
+          <Key>
+            <PropertyRef Name="id_infirmiere" />
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+          </Key>
+          <Property Name="id_infirmiere" Type="int" Nullable="false" />
+          <Property Name="id_categ_soins" Type="int" Nullable="false" />
+          <Property Name="id_type_soins" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="temoignage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="personne_login" Type="int" Nullable="false" />
+          <Property Name="contenu" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="valide" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="token">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_login" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="jeton" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="type_soins">
+          <Key>
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+          </Key>
+          <Property Name="id_categ_soins" Type="int" Nullable="false" />
+          <Property Name="id_type_soins" Type="int" Nullable="false" />
+          <Property Name="libel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="visite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="patient" Type="int" Nullable="false" />
+          <Property Name="infirmiere" Type="int" Nullable="false" />
+          <Property Name="date_prevue" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="date_reelle" Type="datetime2" Precision="0" />
+          <Property Name="duree" Type="int" Nullable="false" />
+          <Property Name="compte_rendu_infirmiere" Type="nvarchar(max)" />
+          <Property Name="compte_rendu_patient" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="convalescence$convalescence_ibfk_1">
+          <End Role="patient" Type="Self.patient" Multiplicity="1" />
+          <End Role="convalescence" Type="Self.convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="convalescence">
+              <PropertyRef Name="id_patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="convalescence$convalescence_ibfk_2">
+          <End Role="lieu_convalescence" Type="Self.lieu_convalescence" Multiplicity="1" />
+          <End Role="convalescence" Type="Self.convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lieu_convalescence">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="convalescence">
+              <PropertyRef Name="id_lieux" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indisponibilite$indisponibilite_ibfk_1">
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="1" />
+          <End Role="indisponibilite" Type="Self.indisponibilite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="indisponibilite">
+              <PropertyRef Name="infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indisponibilite$indisponibilite_ibfk_2">
+          <End Role="categorie_indisponibilite" Type="Self.categorie_indisponibilite" Multiplicity="1" />
+          <End Role="indisponibilite" Type="Self.indisponibilite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie_indisponibilite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="indisponibilite">
+              <PropertyRef Name="categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="infirmiere$infirmiere_ibfk_1">
+          <End Role="personne" Type="Self.personne" Multiplicity="1" />
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="infirmiere_badge$infirmiere_badge_ibfk_1">
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="1" />
+          <End Role="infirmiere_badge" Type="Self.infirmiere_badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere_badge">
+              <PropertyRef Name="id_infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="infirmiere_badge$infirmiere_badge_ibfk_2">
+          <End Role="badge" Type="Self.badge" Multiplicity="1" />
+          <End Role="infirmiere_badge" Type="Self.infirmiere_badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="badge">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere_badge">
+              <PropertyRef Name="id_badge" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lieu_convalescence$lieu_convalescence_ibfk_1">
+          <End Role="personne" Type="Self.personne" Multiplicity="0..1" />
+          <End Role="lieu_convalescence" Type="Self.lieu_convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lieu_convalescence">
+              <PropertyRef Name="contact" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient$patient_ibfk_1">
+          <End Role="personne" Type="Self.personne" Multiplicity="1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient$patient_ibfk_2">
+          <End Role="personne" Type="Self.personne" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="personne_de_confiance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient$patient_ibfk_3">
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="infirmiere_souhait" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="personne_login$personne_login_ibfk_1">
+          <End Role="personne" Type="Self.personne" Multiplicity="1" />
+          <End Role="personne_login" Type="Self.personne_login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="personne_login">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins$FK_soins">
+          <End Role="type_soins" Type="Self.type_soins" Multiplicity="1" />
+          <End Role="soins" Type="Self.soins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Principal>
+            <Dependent Role="soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins_visite$soins_visite_ibfk_1">
+          <End Role="visite" Type="Self.visite" Multiplicity="1" />
+          <End Role="soins_visite" Type="Self.soins_visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="visite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="soins_visite">
+              <PropertyRef Name="visite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins_visite$soins_visite_ibfk_2">
+          <End Role="soins" Type="Self.soins" Multiplicity="1" />
+          <End Role="soins_visite" Type="Self.soins_visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="soins_visite">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+              <PropertyRef Name="id_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="specialisation$specialisation_ibfk_1">
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="1" />
+          <End Role="specialisation" Type="Self.specialisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="specialisation">
+              <PropertyRef Name="id_infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="specialisation$specialisation_ibfk_2">
+          <End Role="type_soins" Type="Self.type_soins" Multiplicity="1" />
+          <End Role="specialisation" Type="Self.specialisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Principal>
+            <Dependent Role="specialisation">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="temoignage$temoignage_ibfk_1">
+          <End Role="personne_login" Type="Self.personne_login" Multiplicity="1" />
+          <End Role="temoignage" Type="Self.temoignage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="temoignage">
+              <PropertyRef Name="personne_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token$token_ibfk_1">
+          <End Role="personne_login" Type="Self.personne_login" Multiplicity="1" />
+          <End Role="token" Type="Self.token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="token">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="type_soins$type_soins_ibfk_1">
+          <End Role="categ_soins" Type="Self.categ_soins" Multiplicity="1" />
+          <End Role="type_soins" Type="Self.type_soins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categ_soins">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="type_soins">
+              <PropertyRef Name="id_categ_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="visite$visite_ibfk_1">
+          <End Role="patient" Type="Self.patient" Multiplicity="1" />
+          <End Role="visite" Type="Self.visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="visite">
+              <PropertyRef Name="patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="visite$visite_ibfk_2">
+          <End Role="infirmiere" Type="Self.infirmiere" Multiplicity="1" />
+          <End Role="visite" Type="Self.visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="visite">
+              <PropertyRef Name="infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mldAP4StoreContainer">
+          <EntitySet Name="badge" EntityType="Self.badge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categ_soins" EntityType="Self.categ_soins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categorie_indisponibilite" EntityType="Self.categorie_indisponibilite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chambre_forte" EntityType="Self.chambre_forte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="convalescence" EntityType="Self.convalescence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="indisponibilite" EntityType="Self.indisponibilite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="infirmiere" EntityType="Self.infirmiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="infirmiere_badge" EntityType="Self.infirmiere_badge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lieu_convalescence" EntityType="Self.lieu_convalescence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="patient" EntityType="Self.patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personne" EntityType="Self.personne" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personne_login" EntityType="Self.personne_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="soins" EntityType="Self.soins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="soins_visite" EntityType="Self.soins_visite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="specialisation" EntityType="Self.specialisation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="temoignage" EntityType="Self.temoignage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="token" EntityType="Self.token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="type_soins" EntityType="Self.type_soins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="visite" EntityType="Self.visite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="administrateur" EntityType="Self.administrateur" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [administrateur].[id] AS [id]
+    FROM [dbo].[administrateur] AS [administrateur]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="convalescence$convalescence_ibfk_1" Association="Self.convalescence$convalescence_ibfk_1">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="convalescence" EntitySet="convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="convalescence$convalescence_ibfk_2" Association="Self.convalescence$convalescence_ibfk_2">
+            <End Role="lieu_convalescence" EntitySet="lieu_convalescence" />
+            <End Role="convalescence" EntitySet="convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="indisponibilite$indisponibilite_ibfk_1" Association="Self.indisponibilite$indisponibilite_ibfk_1">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="indisponibilite" EntitySet="indisponibilite" />
+          </AssociationSet>
+          <AssociationSet Name="indisponibilite$indisponibilite_ibfk_2" Association="Self.indisponibilite$indisponibilite_ibfk_2">
+            <End Role="categorie_indisponibilite" EntitySet="categorie_indisponibilite" />
+            <End Role="indisponibilite" EntitySet="indisponibilite" />
+          </AssociationSet>
+          <AssociationSet Name="infirmiere$infirmiere_ibfk_1" Association="Self.infirmiere$infirmiere_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="infirmiere" EntitySet="infirmiere" />
+          </AssociationSet>
+          <AssociationSet Name="infirmiere_badge$infirmiere_badge_ibfk_1" Association="Self.infirmiere_badge$infirmiere_badge_ibfk_1">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="infirmiere_badge" EntitySet="infirmiere_badge" />
+          </AssociationSet>
+          <AssociationSet Name="infirmiere_badge$infirmiere_badge_ibfk_2" Association="Self.infirmiere_badge$infirmiere_badge_ibfk_2">
+            <End Role="badge" EntitySet="badge" />
+            <End Role="infirmiere_badge" EntitySet="infirmiere_badge" />
+          </AssociationSet>
+          <AssociationSet Name="lieu_convalescence$lieu_convalescence_ibfk_1" Association="Self.lieu_convalescence$lieu_convalescence_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="lieu_convalescence" EntitySet="lieu_convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="patient$patient_ibfk_1" Association="Self.patient$patient_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="patient$patient_ibfk_2" Association="Self.patient$patient_ibfk_2">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="patient$patient_ibfk_3" Association="Self.patient$patient_ibfk_3">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="personne_login$personne_login_ibfk_1" Association="Self.personne_login$personne_login_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="personne_login" EntitySet="personne_login" />
+          </AssociationSet>
+          <AssociationSet Name="soins$FK_soins" Association="Self.soins$FK_soins">
+            <End Role="type_soins" EntitySet="type_soins" />
+            <End Role="soins" EntitySet="soins" />
+          </AssociationSet>
+          <AssociationSet Name="soins_visite$soins_visite_ibfk_1" Association="Self.soins_visite$soins_visite_ibfk_1">
+            <End Role="visite" EntitySet="visite" />
+            <End Role="soins_visite" EntitySet="soins_visite" />
+          </AssociationSet>
+          <AssociationSet Name="soins_visite$soins_visite_ibfk_2" Association="Self.soins_visite$soins_visite_ibfk_2">
+            <End Role="soins" EntitySet="soins" />
+            <End Role="soins_visite" EntitySet="soins_visite" />
+          </AssociationSet>
+          <AssociationSet Name="specialisation$specialisation_ibfk_1" Association="Self.specialisation$specialisation_ibfk_1">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="specialisation" EntitySet="specialisation" />
+          </AssociationSet>
+          <AssociationSet Name="specialisation$specialisation_ibfk_2" Association="Self.specialisation$specialisation_ibfk_2">
+            <End Role="type_soins" EntitySet="type_soins" />
+            <End Role="specialisation" EntitySet="specialisation" />
+          </AssociationSet>
+          <AssociationSet Name="temoignage$temoignage_ibfk_1" Association="Self.temoignage$temoignage_ibfk_1">
+            <End Role="personne_login" EntitySet="personne_login" />
+            <End Role="temoignage" EntitySet="temoignage" />
+          </AssociationSet>
+          <AssociationSet Name="token$token_ibfk_1" Association="Self.token$token_ibfk_1">
+            <End Role="personne_login" EntitySet="personne_login" />
+            <End Role="token" EntitySet="token" />
+          </AssociationSet>
+          <AssociationSet Name="type_soins$type_soins_ibfk_1" Association="Self.type_soins$type_soins_ibfk_1">
+            <End Role="categ_soins" EntitySet="categ_soins" />
+            <End Role="type_soins" EntitySet="type_soins" />
+          </AssociationSet>
+          <AssociationSet Name="visite$visite_ibfk_1" Association="Self.visite$visite_ibfk_1">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="visite" EntitySet="visite" />
+          </AssociationSet>
+          <AssociationSet Name="visite$visite_ibfk_2" Association="Self.visite$visite_ibfk_2">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="visite" EntitySet="visite" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mldAP4" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="connectAP4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="badge" EntityType="mldAP4.badge" />
+          <EntitySet Name="categ_soins" EntityType="mldAP4.categ_soins" />
+          <EntitySet Name="categorie_indisponibilite" EntityType="mldAP4.categorie_indisponibilite" />
+          <EntitySet Name="chambre_forte" EntityType="mldAP4.chambre_forte" />
+          <EntitySet Name="convalescence" EntityType="mldAP4.convalescence" />
+          <EntitySet Name="indisponibilite" EntityType="mldAP4.indisponibilite" />
+          <EntitySet Name="infirmiere" EntityType="mldAP4.infirmiere" />
+          <EntitySet Name="infirmiere_badge" EntityType="mldAP4.infirmiere_badge" />
+          <EntitySet Name="lieu_convalescence" EntityType="mldAP4.lieu_convalescence" />
+          <EntitySet Name="patient" EntityType="mldAP4.patient" />
+          <EntitySet Name="personne" EntityType="mldAP4.personne" />
+          <EntitySet Name="personne_login" EntityType="mldAP4.personne_login" />
+          <EntitySet Name="soins" EntityType="mldAP4.soins" />
+          <EntitySet Name="soins_visite" EntityType="mldAP4.soins_visite" />
+          <EntitySet Name="temoignage" EntityType="mldAP4.temoignage" />
+          <EntitySet Name="token" EntityType="mldAP4.token" />
+          <EntitySet Name="type_soins" EntityType="mldAP4.type_soins" />
+          <EntitySet Name="visite" EntityType="mldAP4.visite" />
+          <EntitySet Name="administrateur" EntityType="mldAP4.administrateur" />
+          <AssociationSet Name="infirmiere_badge_infirmiere_badge_ibfk_2" Association="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_2">
+            <End Role="badge" EntitySet="badge" />
+            <End Role="infirmiere_badge" EntitySet="infirmiere_badge" />
+          </AssociationSet>
+          <AssociationSet Name="type_soins_type_soins_ibfk_1" Association="mldAP4.type_soins_type_soins_ibfk_1">
+            <End Role="categ_soins" EntitySet="categ_soins" />
+            <End Role="type_soins" EntitySet="type_soins" />
+          </AssociationSet>
+          <AssociationSet Name="indisponibilite_indisponibilite_ibfk_2" Association="mldAP4.indisponibilite_indisponibilite_ibfk_2">
+            <End Role="categorie_indisponibilite" EntitySet="categorie_indisponibilite" />
+            <End Role="indisponibilite" EntitySet="indisponibilite" />
+          </AssociationSet>
+          <AssociationSet Name="convalescence_convalescence_ibfk_1" Association="mldAP4.convalescence_convalescence_ibfk_1">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="convalescence" EntitySet="convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="convalescence_convalescence_ibfk_2" Association="mldAP4.convalescence_convalescence_ibfk_2">
+            <End Role="lieu_convalescence" EntitySet="lieu_convalescence" />
+            <End Role="convalescence" EntitySet="convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="indisponibilite_indisponibilite_ibfk_1" Association="mldAP4.indisponibilite_indisponibilite_ibfk_1">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="indisponibilite" EntitySet="indisponibilite" />
+          </AssociationSet>
+          <AssociationSet Name="infirmiere_infirmiere_ibfk_1" Association="mldAP4.infirmiere_infirmiere_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="infirmiere" EntitySet="infirmiere" />
+          </AssociationSet>
+          <AssociationSet Name="infirmiere_badge_infirmiere_badge_ibfk_1" Association="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_1">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="infirmiere_badge" EntitySet="infirmiere_badge" />
+          </AssociationSet>
+          <AssociationSet Name="patient_patient_ibfk_3" Association="mldAP4.patient_patient_ibfk_3">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="visite_visite_ibfk_2" Association="mldAP4.visite_visite_ibfk_2">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="visite" EntitySet="visite" />
+          </AssociationSet>
+          <AssociationSet Name="lieu_convalescence_lieu_convalescence_ibfk_1" Association="mldAP4.lieu_convalescence_lieu_convalescence_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="lieu_convalescence" EntitySet="lieu_convalescence" />
+          </AssociationSet>
+          <AssociationSet Name="patient_patient_ibfk_1" Association="mldAP4.patient_patient_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="patient_patient_ibfk_2" Association="mldAP4.patient_patient_ibfk_2">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="visite_visite_ibfk_1" Association="mldAP4.visite_visite_ibfk_1">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="visite" EntitySet="visite" />
+          </AssociationSet>
+          <AssociationSet Name="personne_login_personne_login_ibfk_1" Association="mldAP4.personne_login_personne_login_ibfk_1">
+            <End Role="personne" EntitySet="personne" />
+            <End Role="personne_login" EntitySet="personne_login" />
+          </AssociationSet>
+          <AssociationSet Name="temoignage_temoignage_ibfk_1" Association="mldAP4.temoignage_temoignage_ibfk_1">
+            <End Role="personne_login" EntitySet="personne_login" />
+            <End Role="temoignage" EntitySet="temoignage" />
+          </AssociationSet>
+          <AssociationSet Name="token_token_ibfk_1" Association="mldAP4.token_token_ibfk_1">
+            <End Role="personne_login" EntitySet="personne_login" />
+            <End Role="token" EntitySet="token" />
+          </AssociationSet>
+          <AssociationSet Name="soins_FK_soins" Association="mldAP4.soins_FK_soins">
+            <End Role="type_soins" EntitySet="type_soins" />
+            <End Role="soins" EntitySet="soins" />
+          </AssociationSet>
+          <AssociationSet Name="soins_visite_soins_visite_ibfk_2" Association="mldAP4.soins_visite_soins_visite_ibfk_2">
+            <End Role="soins" EntitySet="soins" />
+            <End Role="soins_visite" EntitySet="soins_visite" />
+          </AssociationSet>
+          <AssociationSet Name="soins_visite_soins_visite_ibfk_1" Association="mldAP4.soins_visite_soins_visite_ibfk_1">
+            <End Role="visite" EntitySet="visite" />
+            <End Role="soins_visite" EntitySet="soins_visite" />
+          </AssociationSet>
+          <AssociationSet Name="specialisation" Association="mldAP4.specialisation">
+            <End Role="infirmiere" EntitySet="infirmiere" />
+            <End Role="type_soins" EntitySet="type_soins" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="badge">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uid" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="actif" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="infirmiere_badge" Relationship="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_2" FromRole="badge" ToRole="infirmiere_badge" />
+        </EntityType>
+        <EntityType Name="categ_soins">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="libel" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="type_soins" Relationship="mldAP4.type_soins_type_soins_ibfk_1" FromRole="categ_soins" ToRole="type_soins" />
+        </EntityType>
+        <EntityType Name="categorie_indisponibilite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="libelle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="indisponibilite" Relationship="mldAP4.indisponibilite_indisponibilite_ibfk_2" FromRole="categorie_indisponibilite" ToRole="indisponibilite" />
+        </EntityType>
+        <EntityType Name="chambre_forte">
+          <Key>
+            <PropertyRef Name="badge" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="badge" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="acces_ok" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="convalescence">
+          <Key>
+            <PropertyRef Name="id_patient" />
+            <PropertyRef Name="id_lieux" />
+            <PropertyRef Name="date_deb" />
+          </Key>
+          <Property Name="id_patient" Type="Int32" Nullable="false" />
+          <Property Name="id_lieux" Type="Int32" Nullable="false" />
+          <Property Name="date_deb" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_fin" Type="DateTime" Precision="0" />
+          <Property Name="chambre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tel_directe" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="patient" Relationship="mldAP4.convalescence_convalescence_ibfk_1" FromRole="convalescence" ToRole="patient" />
+          <NavigationProperty Name="lieu_convalescence" Relationship="mldAP4.convalescence_convalescence_ibfk_2" FromRole="convalescence" ToRole="lieu_convalescence" />
+        </EntityType>
+        <EntityType Name="indisponibilite">
+          <Key>
+            <PropertyRef Name="infirmiere" />
+            <PropertyRef Name="date_debut" />
+          </Key>
+          <Property Name="infirmiere" Type="Int32" Nullable="false" />
+          <Property Name="date_debut" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_fin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="heure_deb" Type="Time" Precision="7" />
+          <Property Name="heure_fin" Type="Time" Precision="7" />
+          <Property Name="categorie" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categorie_indisponibilite" Relationship="mldAP4.indisponibilite_indisponibilite_ibfk_2" FromRole="indisponibilite" ToRole="categorie_indisponibilite" />
+          <NavigationProperty Name="infirmiere1" Relationship="mldAP4.indisponibilite_indisponibilite_ibfk_1" FromRole="indisponibilite" ToRole="infirmiere" />
+        </EntityType>
+        <EntityType Name="infirmiere">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="fichier_photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="indisponibilite" Relationship="mldAP4.indisponibilite_indisponibilite_ibfk_1" FromRole="infirmiere" ToRole="indisponibilite" />
+          <NavigationProperty Name="personne" Relationship="mldAP4.infirmiere_infirmiere_ibfk_1" FromRole="infirmiere" ToRole="personne" />
+          <NavigationProperty Name="infirmiere_badge" Relationship="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_1" FromRole="infirmiere" ToRole="infirmiere_badge" />
+          <NavigationProperty Name="patient" Relationship="mldAP4.patient_patient_ibfk_3" FromRole="infirmiere" ToRole="patient" />
+          <NavigationProperty Name="visite" Relationship="mldAP4.visite_visite_ibfk_2" FromRole="infirmiere" ToRole="visite" />
+          <NavigationProperty Name="type_soins" Relationship="mldAP4.specialisation" FromRole="infirmiere" ToRole="type_soins" />
+        </EntityType>
+        <EntityType Name="infirmiere_badge">
+          <Key>
+            <PropertyRef Name="id_infirmiere" />
+            <PropertyRef Name="id_badge" />
+            <PropertyRef Name="date_deb" />
+          </Key>
+          <Property Name="id_infirmiere" Type="Int32" Nullable="false" />
+          <Property Name="id_badge" Type="Int32" Nullable="false" />
+          <Property Name="date_deb" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_fin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="badge" Relationship="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_2" FromRole="infirmiere_badge" ToRole="badge" />
+          <NavigationProperty Name="infirmiere" Relationship="mldAP4.infirmiere_badge_infirmiere_badge_ibfk_1" FromRole="infirmiere_badge" ToRole="infirmiere" />
+        </EntityType>
+        <EntityType Name="lieu_convalescence">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="titre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ad1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ad2" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cp" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="ville" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="tel_fixe" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="contact" Type="Int32" />
+          <NavigationProperty Name="convalescence" Relationship="mldAP4.convalescence_convalescence_ibfk_2" FromRole="lieu_convalescence" ToRole="convalescence" />
+          <NavigationProperty Name="personne" Relationship="mldAP4.lieu_convalescence_lieu_convalescence_ibfk_1" FromRole="lieu_convalescence" ToRole="personne" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="informations_medicales" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="personne_de_confiance" Type="Int32" />
+          <Property Name="infirmiere_souhait" Type="Int32" />
+          <NavigationProperty Name="convalescence" Relationship="mldAP4.convalescence_convalescence_ibfk_1" FromRole="patient" ToRole="convalescence" />
+          <NavigationProperty Name="infirmiere" Relationship="mldAP4.patient_patient_ibfk_3" FromRole="patient" ToRole="infirmiere" />
+          <NavigationProperty Name="personne" Relationship="mldAP4.patient_patient_ibfk_1" FromRole="patient" ToRole="personne" />
+          <NavigationProperty Name="personne1" Relationship="mldAP4.patient_patient_ibfk_2" FromRole="patient" ToRole="personne" />
+          <NavigationProperty Name="visite" Relationship="mldAP4.visite_visite_ibfk_1" FromRole="patient" ToRole="visite" />
+        </EntityType>
+        <EntityType Name="personne">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sexe" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="date_naiss" Type="DateTime" Precision="0" />
+          <Property Name="date_deces" Type="DateTime" Precision="0" />
+          <Property Name="ad1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ad2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cp" Type="Int32" />
+          <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="tel_fixe" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="tel_port" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="infirmiere" Relationship="mldAP4.infirmiere_infirmiere_ibfk_1" FromRole="personne" ToRole="infirmiere" />
+          <NavigationProperty Name="lieu_convalescence" Relationship="mldAP4.lieu_convalescence_lieu_convalescence_ibfk_1" FromRole="personne" ToRole="lieu_convalescence" />
+          <NavigationProperty Name="patient" Relationship="mldAP4.patient_patient_ibfk_1" FromRole="personne" ToRole="patient" />
+          <NavigationProperty Name="patient1" Relationship="mldAP4.patient_patient_ibfk_2" FromRole="personne" ToRole="patient" />
+          <NavigationProperty Name="personne_login" Relationship="mldAP4.personne_login_personne_login_ibfk_1" FromRole="personne" ToRole="personne_login" />
+        </EntityType>
+        <EntityType Name="personne_login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="mp" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="derniere_connexion" Type="DateTime" Precision="0" />
+          <Property Name="nb_tentative_erreur" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="personne" Relationship="mldAP4.personne_login_personne_login_ibfk_1" FromRole="personne_login" ToRole="personne" />
+          <NavigationProperty Name="temoignage" Relationship="mldAP4.temoignage_temoignage_ibfk_1" FromRole="personne_login" ToRole="temoignage" />
+          <NavigationProperty Name="token" Relationship="mldAP4.token_token_ibfk_1" FromRole="personne_login" ToRole="token" />
+        </EntityType>
+        <EntityType Name="soins">
+          <Key>
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id_categ_soins" Type="Int32" Nullable="false" />
+          <Property Name="id_type_soins" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="libel" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="coefficient" Type="Single" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="type_soins" Relationship="mldAP4.soins_FK_soins" FromRole="soins" ToRole="type_soins" />
+          <NavigationProperty Name="soins_visite" Relationship="mldAP4.soins_visite_soins_visite_ibfk_2" FromRole="soins" ToRole="soins_visite" />
+        </EntityType>
+        <EntityType Name="soins_visite">
+          <Key>
+            <PropertyRef Name="visite" />
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+            <PropertyRef Name="id_soins" />
+          </Key>
+          <Property Name="visite" Type="Int32" Nullable="false" />
+          <Property Name="id_categ_soins" Type="Int32" Nullable="false" />
+          <Property Name="id_type_soins" Type="Int32" Nullable="false" />
+          <Property Name="id_soins" Type="Int32" Nullable="false" />
+          <Property Name="prevu" Type="Int16" Nullable="false" />
+          <Property Name="realise" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="soins" Relationship="mldAP4.soins_visite_soins_visite_ibfk_2" FromRole="soins_visite" ToRole="soins" />
+          <NavigationProperty Name="visite1" Relationship="mldAP4.soins_visite_soins_visite_ibfk_1" FromRole="soins_visite" ToRole="visite" />
+        </EntityType>
+        <EntityType Name="temoignage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="personne_login" Type="Int32" Nullable="false" />
+          <Property Name="contenu" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="valide" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="personne_login1" Relationship="mldAP4.temoignage_temoignage_ibfk_1" FromRole="temoignage" ToRole="personne_login" />
+        </EntityType>
+        <EntityType Name="token">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_login" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="jeton" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="personne_login" Relationship="mldAP4.token_token_ibfk_1" FromRole="token" ToRole="personne_login" />
+        </EntityType>
+        <EntityType Name="type_soins">
+          <Key>
+            <PropertyRef Name="id_categ_soins" />
+            <PropertyRef Name="id_type_soins" />
+          </Key>
+          <Property Name="id_categ_soins" Type="Int32" Nullable="false" />
+          <Property Name="id_type_soins" Type="Int32" Nullable="false" />
+          <Property Name="libel" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="categ_soins" Relationship="mldAP4.type_soins_type_soins_ibfk_1" FromRole="type_soins" ToRole="categ_soins" />
+          <NavigationProperty Name="soins" Relationship="mldAP4.soins_FK_soins" FromRole="type_soins" ToRole="soins" />
+          <NavigationProperty Name="infirmiere" Relationship="mldAP4.specialisation" FromRole="type_soins" ToRole="infirmiere" />
+        </EntityType>
+        <EntityType Name="visite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="patient" Type="Int32" Nullable="false" />
+          <Property Name="infirmiere" Type="Int32" Nullable="false" />
+          <Property Name="date_prevue" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_reelle" Type="DateTime" Precision="0" />
+          <Property Name="duree" Type="Int32" Nullable="false" />
+          <Property Name="compte_rendu_infirmiere" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="compte_rendu_patient" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="infirmiere1" Relationship="mldAP4.visite_visite_ibfk_2" FromRole="visite" ToRole="infirmiere" />
+          <NavigationProperty Name="patient1" Relationship="mldAP4.visite_visite_ibfk_1" FromRole="visite" ToRole="patient" />
+          <NavigationProperty Name="soins_visite" Relationship="mldAP4.soins_visite_soins_visite_ibfk_1" FromRole="visite" ToRole="soins_visite" />
+        </EntityType>
+        <EntityType Name="administrateur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="infirmiere_badge_infirmiere_badge_ibfk_2">
+          <End Type="mldAP4.badge" Role="badge" Multiplicity="1" />
+          <End Type="mldAP4.infirmiere_badge" Role="infirmiere_badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="badge">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere_badge">
+              <PropertyRef Name="id_badge" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="type_soins_type_soins_ibfk_1">
+          <End Type="mldAP4.categ_soins" Role="categ_soins" Multiplicity="1" />
+          <End Type="mldAP4.type_soins" Role="type_soins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categ_soins">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="type_soins">
+              <PropertyRef Name="id_categ_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indisponibilite_indisponibilite_ibfk_2">
+          <End Type="mldAP4.categorie_indisponibilite" Role="categorie_indisponibilite" Multiplicity="1" />
+          <End Type="mldAP4.indisponibilite" Role="indisponibilite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie_indisponibilite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="indisponibilite">
+              <PropertyRef Name="categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="convalescence_convalescence_ibfk_1">
+          <End Type="mldAP4.patient" Role="patient" Multiplicity="1" />
+          <End Type="mldAP4.convalescence" Role="convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="convalescence">
+              <PropertyRef Name="id_patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="convalescence_convalescence_ibfk_2">
+          <End Type="mldAP4.lieu_convalescence" Role="lieu_convalescence" Multiplicity="1" />
+          <End Type="mldAP4.convalescence" Role="convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lieu_convalescence">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="convalescence">
+              <PropertyRef Name="id_lieux" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indisponibilite_indisponibilite_ibfk_1">
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="1" />
+          <End Type="mldAP4.indisponibilite" Role="indisponibilite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="indisponibilite">
+              <PropertyRef Name="infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="infirmiere_infirmiere_ibfk_1">
+          <End Type="mldAP4.personne" Role="personne" Multiplicity="1" />
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="infirmiere_badge_infirmiere_badge_ibfk_1">
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="1" />
+          <End Type="mldAP4.infirmiere_badge" Role="infirmiere_badge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="infirmiere_badge">
+              <PropertyRef Name="id_infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_patient_ibfk_3">
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="0..1" />
+          <End Type="mldAP4.patient" Role="patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="infirmiere_souhait" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="visite_visite_ibfk_2">
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="1" />
+          <End Type="mldAP4.visite" Role="visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="infirmiere">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="visite">
+              <PropertyRef Name="infirmiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="lieu_convalescence_lieu_convalescence_ibfk_1">
+          <End Type="mldAP4.personne" Role="personne" Multiplicity="0..1" />
+          <End Type="mldAP4.lieu_convalescence" Role="lieu_convalescence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lieu_convalescence">
+              <PropertyRef Name="contact" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_patient_ibfk_1">
+          <End Type="mldAP4.personne" Role="personne" Multiplicity="1" />
+          <End Type="mldAP4.patient" Role="patient" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_patient_ibfk_2">
+          <End Type="mldAP4.personne" Role="personne" Multiplicity="0..1" />
+          <End Type="mldAP4.patient" Role="patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="personne_de_confiance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="visite_visite_ibfk_1">
+          <End Type="mldAP4.patient" Role="patient" Multiplicity="1" />
+          <End Type="mldAP4.visite" Role="visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="visite">
+              <PropertyRef Name="patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="personne_login_personne_login_ibfk_1">
+          <End Type="mldAP4.personne" Role="personne" Multiplicity="1" />
+          <End Type="mldAP4.personne_login" Role="personne_login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="personne">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="personne_login">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="temoignage_temoignage_ibfk_1">
+          <End Type="mldAP4.personne_login" Role="personne_login" Multiplicity="1" />
+          <End Type="mldAP4.temoignage" Role="temoignage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="temoignage">
+              <PropertyRef Name="personne_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token_token_ibfk_1">
+          <End Type="mldAP4.personne_login" Role="personne_login" Multiplicity="1" />
+          <End Type="mldAP4.token" Role="token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personne_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="token">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins_FK_soins">
+          <End Type="mldAP4.type_soins" Role="type_soins" Multiplicity="1" />
+          <End Type="mldAP4.soins" Role="soins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Principal>
+            <Dependent Role="soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins_visite_soins_visite_ibfk_2">
+          <End Type="mldAP4.soins" Role="soins" Multiplicity="1" />
+          <End Type="mldAP4.soins_visite" Role="soins_visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="soins">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="soins_visite">
+              <PropertyRef Name="id_categ_soins" />
+              <PropertyRef Name="id_type_soins" />
+              <PropertyRef Name="id_soins" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soins_visite_soins_visite_ibfk_1">
+          <End Type="mldAP4.visite" Role="visite" Multiplicity="1" />
+          <End Type="mldAP4.soins_visite" Role="soins_visite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="visite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="soins_visite">
+              <PropertyRef Name="visite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="specialisation">
+          <End Type="mldAP4.infirmiere" Role="infirmiere" Multiplicity="*" />
+          <End Type="mldAP4.type_soins" Role="type_soins" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mldAP4StoreContainer" CdmEntityContainer="connectAP4">
+          <EntitySetMapping Name="badge">
+            <EntityTypeMapping TypeName="mldAP4.badge">
+              <MappingFragment StoreEntitySet="badge">
+                <ScalarProperty Name="actif" ColumnName="actif" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categ_soins">
+            <EntityTypeMapping TypeName="mldAP4.categ_soins">
+              <MappingFragment StoreEntitySet="categ_soins">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="libel" ColumnName="libel" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categorie_indisponibilite">
+            <EntityTypeMapping TypeName="mldAP4.categorie_indisponibilite">
+              <MappingFragment StoreEntitySet="categorie_indisponibilite">
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chambre_forte">
+            <EntityTypeMapping TypeName="mldAP4.chambre_forte">
+              <MappingFragment StoreEntitySet="chambre_forte">
+                <ScalarProperty Name="acces_ok" ColumnName="acces_ok" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="badge" ColumnName="badge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="convalescence">
+            <EntityTypeMapping TypeName="mldAP4.convalescence">
+              <MappingFragment StoreEntitySet="convalescence">
+                <ScalarProperty Name="tel_directe" ColumnName="tel_directe" />
+                <ScalarProperty Name="chambre" ColumnName="chambre" />
+                <ScalarProperty Name="date_fin" ColumnName="date_fin" />
+                <ScalarProperty Name="date_deb" ColumnName="date_deb" />
+                <ScalarProperty Name="id_lieux" ColumnName="id_lieux" />
+                <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="indisponibilite">
+            <EntityTypeMapping TypeName="mldAP4.indisponibilite">
+              <MappingFragment StoreEntitySet="indisponibilite">
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
+                <ScalarProperty Name="heure_deb" ColumnName="heure_deb" />
+                <ScalarProperty Name="date_fin" ColumnName="date_fin" />
+                <ScalarProperty Name="date_debut" ColumnName="date_debut" />
+                <ScalarProperty Name="infirmiere" ColumnName="infirmiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="infirmiere">
+            <EntityTypeMapping TypeName="mldAP4.infirmiere">
+              <MappingFragment StoreEntitySet="infirmiere">
+                <ScalarProperty Name="fichier_photo" ColumnName="fichier_photo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="infirmiere_badge">
+            <EntityTypeMapping TypeName="mldAP4.infirmiere_badge">
+              <MappingFragment StoreEntitySet="infirmiere_badge">
+                <ScalarProperty Name="date_fin" ColumnName="date_fin" />
+                <ScalarProperty Name="date_deb" ColumnName="date_deb" />
+                <ScalarProperty Name="id_badge" ColumnName="id_badge" />
+                <ScalarProperty Name="id_infirmiere" ColumnName="id_infirmiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lieu_convalescence">
+            <EntityTypeMapping TypeName="mldAP4.lieu_convalescence">
+              <MappingFragment StoreEntitySet="lieu_convalescence">
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="tel_fixe" ColumnName="tel_fixe" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="cp" ColumnName="cp" />
+                <ScalarProperty Name="ad2" ColumnName="ad2" />
+                <ScalarProperty Name="ad1" ColumnName="ad1" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="patient">
+            <EntityTypeMapping TypeName="mldAP4.patient">
+              <MappingFragment StoreEntitySet="patient">
+                <ScalarProperty Name="infirmiere_souhait" ColumnName="infirmiere_souhait" />
+                <ScalarProperty Name="personne_de_confiance" ColumnName="personne_de_confiance" />
+                <ScalarProperty Name="informations_medicales" ColumnName="informations_medicales" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personne">
+            <EntityTypeMapping TypeName="mldAP4.personne">
+              <MappingFragment StoreEntitySet="personne">
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="tel_port" ColumnName="tel_port" />
+                <ScalarProperty Name="tel_fixe" ColumnName="tel_fixe" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="cp" ColumnName="cp" />
+                <ScalarProperty Name="ad2" ColumnName="ad2" />
+                <ScalarProperty Name="ad1" ColumnName="ad1" />
+                <ScalarProperty Name="date_deces" ColumnName="date_deces" />
+                <ScalarProperty Name="date_naiss" ColumnName="date_naiss" />
+                <ScalarProperty Name="sexe" ColumnName="sexe" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personne_login">
+            <EntityTypeMapping TypeName="mldAP4.personne_login">
+              <MappingFragment StoreEntitySet="personne_login">
+                <ScalarProperty Name="nb_tentative_erreur" ColumnName="nb_tentative_erreur" />
+                <ScalarProperty Name="derniere_connexion" ColumnName="derniere_connexion" />
+                <ScalarProperty Name="mp" ColumnName="mp" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="soins">
+            <EntityTypeMapping TypeName="mldAP4.soins">
+              <MappingFragment StoreEntitySet="soins">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="coefficient" ColumnName="coefficient" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="libel" ColumnName="libel" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_type_soins" ColumnName="id_type_soins" />
+                <ScalarProperty Name="id_categ_soins" ColumnName="id_categ_soins" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="soins_visite">
+            <EntityTypeMapping TypeName="mldAP4.soins_visite">
+              <MappingFragment StoreEntitySet="soins_visite">
+                <ScalarProperty Name="realise" ColumnName="realise" />
+                <ScalarProperty Name="prevu" ColumnName="prevu" />
+                <ScalarProperty Name="id_soins" ColumnName="id_soins" />
+                <ScalarProperty Name="id_type_soins" ColumnName="id_type_soins" />
+                <ScalarProperty Name="id_categ_soins" ColumnName="id_categ_soins" />
+                <ScalarProperty Name="visite" ColumnName="visite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="temoignage">
+            <EntityTypeMapping TypeName="mldAP4.temoignage">
+              <MappingFragment StoreEntitySet="temoignage">
+                <ScalarProperty Name="valide" ColumnName="valide" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="contenu" ColumnName="contenu" />
+                <ScalarProperty Name="personne_login" ColumnName="personne_login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="token">
+            <EntityTypeMapping TypeName="mldAP4.token">
+              <MappingFragment StoreEntitySet="token">
+                <ScalarProperty Name="jeton" ColumnName="jeton" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id_login" ColumnName="id_login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="type_soins">
+            <EntityTypeMapping TypeName="mldAP4.type_soins">
+              <MappingFragment StoreEntitySet="type_soins">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="libel" ColumnName="libel" />
+                <ScalarProperty Name="id_type_soins" ColumnName="id_type_soins" />
+                <ScalarProperty Name="id_categ_soins" ColumnName="id_categ_soins" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="visite">
+            <EntityTypeMapping TypeName="mldAP4.visite">
+              <MappingFragment StoreEntitySet="visite">
+                <ScalarProperty Name="compte_rendu_patient" ColumnName="compte_rendu_patient" />
+                <ScalarProperty Name="compte_rendu_infirmiere" ColumnName="compte_rendu_infirmiere" />
+                <ScalarProperty Name="duree" ColumnName="duree" />
+                <ScalarProperty Name="date_reelle" ColumnName="date_reelle" />
+                <ScalarProperty Name="date_prevue" ColumnName="date_prevue" />
+                <ScalarProperty Name="infirmiere" ColumnName="infirmiere" />
+                <ScalarProperty Name="patient" ColumnName="patient" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="administrateur">
+            <EntityTypeMapping TypeName="mldAP4.administrateur">
+              <MappingFragment StoreEntitySet="administrateur">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="specialisation" TypeName="mldAP4.specialisation" StoreEntitySet="specialisation">
+            <EndProperty Name="type_soins">
+              <ScalarProperty Name="id_type_soins" ColumnName="id_type_soins" />
+              <ScalarProperty Name="id_categ_soins" ColumnName="id_categ_soins" />
+            </EndProperty>
+            <EndProperty Name="infirmiere">
+              <ScalarProperty Name="id" ColumnName="id_infirmiere" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
